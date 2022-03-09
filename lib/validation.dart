@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class Validation extends StatefulWidget {
   @override
   @override
-  State<HomePage> createState() => HomePageState();
+  State<Validation> createState() => ValidationState();
 }
 
-class HomePageState extends State<HomePage> {
+class ValidationState extends State<Validation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class HomePageState extends State<HomePage> {
                     elevation: 22,
                     child: Column(children: [
                       const Text(
-                        'Mes missions',
+                        'Validation',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40),
                       ),

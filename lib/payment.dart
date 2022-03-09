@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class Payment extends StatefulWidget {
   @override
   @override
-  State<HomePage> createState() => HomePageState();
+  State<Payment> createState() => PaymentState();
 }
 
-class HomePageState extends State<HomePage> {
+class PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +16,8 @@ class HomePageState extends State<HomePage> {
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
               colors: [
                 Colors.purpleAccent,
                 Colors.amber,
@@ -34,7 +34,7 @@ class HomePageState extends State<HomePage> {
                     elevation: 22,
                     child: Column(children: [
                       const Text(
-                        'Mes missions',
+                        'Remboursement',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 40),
                       ),
