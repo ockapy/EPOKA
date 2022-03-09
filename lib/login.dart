@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MasterPage extends StatefulWidget {
   @override
@@ -95,7 +96,7 @@ class MasterPageState extends State<MasterPage> {
                             ),
                           ],
                           InkWell(
-                            onTap: () => print("ok"),
+                            onTap: () => post(),
                             child: Container(
                               alignment: Alignment.center,
                               width: 250,
@@ -157,4 +158,11 @@ class MasterPageState extends State<MasterPage> {
       ),
     );
   }
+}
+
+Future<dynamic> post() async {
+  var url = Uri.parse('http://127.0.0.1/epoka/index.php');
+
+  final response = await http.get(url);
+  print(response.body);
 }
