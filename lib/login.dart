@@ -1,3 +1,5 @@
+import 'package:epoka/accueil.dart';
+import 'package:epoka/routeur.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,6 +10,8 @@ class MasterPage extends StatefulWidget {
 
 class MasterPageState extends State<MasterPage> {
   bool register = false;
+  final username = TextEditingController();
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +54,9 @@ class MasterPageState extends State<MasterPage> {
                           ),
                           Container(
                             padding: const EdgeInsets.all(8),
-                            child: const TextField(
-                              decoration: InputDecoration(
+                            child: TextField(
+                              controller: username,
+                              decoration: const InputDecoration(
                                   suffix: Icon(
                                     Icons.mail_outline_outlined,
                                     color: Colors.red,
@@ -65,8 +70,10 @@ class MasterPageState extends State<MasterPage> {
                           ),
                           Container(
                             padding: const EdgeInsets.all(8),
-                            child: const TextField(
-                              decoration: InputDecoration(
+                            child: TextField(
+                              controller: password,
+                              obscureText: true,
+                              decoration: const InputDecoration(
                                   suffix: Icon(
                                     Icons.lock,
                                     color: Colors.red,
@@ -78,25 +85,13 @@ class MasterPageState extends State<MasterPage> {
                                   )),
                             ),
                           ),
-                          if (register == true) ...[
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                    suffix: Icon(
-                                      Icons.lock,
-                                      color: Colors.red,
-                                    ),
-                                    labelText: "Username",
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    )),
-                              ),
-                            ),
-                          ],
                           InkWell(
-                            onTap: () => post(),
+                            onTap: () {
+                              post(username.text, password.text);
+                              // Route route = MaterialPageRoute(
+                              //     builder: (context) => RoutePage());
+                              // Navigator.pushReplacement(context, route);
+                            },
                             child: Container(
                               alignment: Alignment.center,
                               width: 250,
@@ -123,29 +118,7 @@ class MasterPageState extends State<MasterPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 17,
-                          ),
-                          const Text(
-                            "Don't have an account ?",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: (() {
-                                  setState(() {
-                                    register = true;
-                                  });
-                                }),
-                                child: const Text(
-                                  "Register now",
-                                  style: TextStyle(color: Colors.deepOrange),
-                                ),
-                              )
-                            ],
-                          ),
+                          const SizedBox(height: 12)
                         ],
                       ),
                     ),
@@ -160,9 +133,10 @@ class MasterPageState extends State<MasterPage> {
   }
 }
 
-Future<dynamic> post() async {
-  var url = Uri.parse('http://127.0.0.1/epoka/index.php');
+Future<dynamic> post(String login, String password) async {
+  var url = Uri.parse(
+      'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
 
   final response = await http.get(url);
-  print(response.body);
+  // print(response.body);
 }
