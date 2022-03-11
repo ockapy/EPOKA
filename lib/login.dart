@@ -1,4 +1,4 @@
-import 'package:epoka/accueil.dart';
+import 'dart:convert';
 import 'package:epoka/routeur.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,9 +9,9 @@ class MasterPage extends StatefulWidget {
 }
 
 class MasterPageState extends State<MasterPage> {
-  bool register = false;
   final username = TextEditingController();
   final password = TextEditingController();
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,16 @@ class MasterPageState extends State<MasterPage> {
                               size: 60,
                             ),
                           ),
+                          if (error == true) ...[
+                            Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text(
+                                  'Erreur, non reconnu.',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                          ],
                           Container(
                             padding: const EdgeInsets.all(8),
                             child: TextField(
@@ -87,10 +97,7 @@ class MasterPageState extends State<MasterPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              post(username.text, password.text);
-                              // Route route = MaterialPageRoute(
-                              //     builder: (context) => RoutePage());
-                              // Navigator.pushReplacement(context, route);
+                              login(username.text, password.text);
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -131,12 +138,20 @@ class MasterPageState extends State<MasterPage> {
       ),
     );
   }
-}
 
-Future<dynamic> post(String login, String password) async {
-  var url = Uri.parse(
-      'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
-
-  final response = await http.get(url);
-  // print(response.body);
+  Future<dynamic> login(String login, String password) async {
+    try {
+      var url = Uri.parse(
+          'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
+      final response = await http.get(url);
+      var info = jsonDecode(response.body);
+      print(info["Nom"]);
+      Navigator.of(context).popAndPushNamed('/Home');
+    } catch (e) {
+      setState(() {
+        error = true;
+      });
+      print(e);
+    }
+  }
 }

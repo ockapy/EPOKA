@@ -13,5 +13,5 @@
     $resultats->bindValue(':mdp',$_GET['mdp']);
     $resultats->execute();
     $userData = $resultats->fetch(PDO::FETCH_ASSOC);
-    print_r($userData)
+    echo json_encode($userData)
 ?>
