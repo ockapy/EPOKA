@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:epoka/routeur.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -144,14 +143,44 @@ class MasterPageState extends State<MasterPage> {
       var url = Uri.parse(
           'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
       final response = await http.get(url);
-      var info = jsonDecode(response.body);
-      print(info["Nom"]);
-      Navigator.of(context).popAndPushNamed('/Home');
+      Map<String, dynamic> info = jsonDecode(response.body);
+      // var utilisateur = User.fromJson(info);
+
+      print(info["Id"]);
+      Navigator.of(context).popAndPushNamed('/Home', arguments: info);
     } catch (e) {
       setState(() {
         error = true;
       });
       print(e);
     }
+  }
+}
+
+class User {
+  int id;
+  int idSup;
+  String nom;
+  String prenom;
+  int tel;
+  bool isComptable;
+  String clee;
+  int idAgence;
+
+  User(this.id, this.idSup, this.nom, this.prenom, this.tel, this.isComptable,
+      this.clee, this.idAgence);
+
+  User.fromJson(Map<String, dynamic> json)
+      : id = json["Id"],
+        idSup = json["IdSup"],
+        nom = json["Nom"],
+        prenom = json["Prenom"],
+        tel = json["Tel"],
+        isComptable = json["IsComptable"],
+        clee = json["Clee"],
+        idAgence = json["IdAgence"];
+
+  Map<String, dynamic> toJson() {
+    return {'Id': id};
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:epoka/login.dart';
 import 'package:epoka/routeur.dart';
 import 'package:epoka/validation.dart';
@@ -6,6 +8,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 }
+
+StreamController control = StreamController();
+Stream dataBaseStream = control.stream;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
