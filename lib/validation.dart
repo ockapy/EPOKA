@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class Validation extends StatefulWidget {
   @override
-  @override
+
   State<Validation> createState() => ValidationState();
 }
 
 class ValidationState extends State<Validation> {
+  bool Description = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,56 +31,106 @@ class ValidationState extends State<Validation> {
               child: Container(
                 height: MediaQuery.of(context).size.height - 200,
                 width: MediaQuery.of(context).size.width - 100,
-                child: Card(
+                child: Column(children: [
+                Card(
                     elevation: 22,
                     child: Column(children: [
-                      const Text(
-                        'Validation',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 40),
+                      const SizedBox(height: 10),
+                      Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                        children:  [
+                           const Text(
+                            'intituler',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                                
+                          ),
+                          const SizedBox(width: 20,),
+                          FloatingActionButton.small(onPressed: (() {
+                           setState(() {
+                             Description = !Description;
+                           }); 
+                        
+                      }), child: const Icon(Icons.add, size: 40,)),
+                        ],
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width - 200,
-                        child: Table(
-                          border: TableBorder.all(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              borderRadius: BorderRadius.circular(10),
-                              width: 2),
-                          children: [
-                            TableRow(children: [
-                              Column(children: const [
-                                Text('Website',
-                                    style: TextStyle(fontSize: 20.0))
-                              ]),
-                              Column(children: const [
-                                Text('Tutorial',
-                                    style: TextStyle(fontSize: 20.0))
-                              ]),
-                              Column(children: const [
-                                Text('Review', style: TextStyle(fontSize: 20.0))
-                              ]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('Flutter')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('MySQL')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('ReactJS')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                          ],
-                        ),
+                        
+                      ),
+                      
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                            Text(
+                            'Commune D ',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+                          Icon(Icons.arrow_right_alt, size: 40, ),
+                           Text(
+                            ' Commune A',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                            Text(
+                            'Date D ',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+                          Icon(Icons.arrow_right_alt, size: 40, ),
+                           Text(
+                            ' Date A',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                            Text(
+                            'Utilisateur  ',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+
+                           Text(
+                            ' Km :',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+
+                          Text(
+                            ' Km ',
+                            style:   TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 40),
+                          ),
+                        ],
+                      ),
+                      if( Description == true) ...[
+                       Container(
+                                padding: const EdgeInsets.all(8),
+                                child: const Text(
+                                  'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ],
+                      const SizedBox(height: 30),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 200,
+                        
                       ),
                     ])),
+                  ],)
               )),
         ),
       ),
