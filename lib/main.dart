@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:epoka/login.dart';
 import 'package:epoka/routeur.dart';
 import 'package:epoka/validation.dart';
@@ -9,7 +8,7 @@ void main() {
   runApp(const MyApp());
 }
 
-StreamController control = StreamController();
+StreamController control = StreamController.broadcast();
 Stream dataBaseStream = control.stream;
 
 class MyApp extends StatelessWidget {

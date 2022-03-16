@@ -143,11 +143,11 @@ class MasterPageState extends State<MasterPage> {
       var url = Uri.parse(
           'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
       final response = await http.get(url);
-      Map<String, dynamic> info = jsonDecode(response.body);
-      // var utilisateur = User.fromJson(info);
+      Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
+       var utilisateur = User.fromJson(map);
 
-      print(info["Id"]);
-      Navigator.of(context).popAndPushNamed('/Home', arguments: info);
+      print(utilisateur.clee);
+      Navigator.of(context).popAndPushNamed('/Home', arguments: utilisateur);
     } catch (e) {
       setState(() {
         error = true;
@@ -159,11 +159,11 @@ class MasterPageState extends State<MasterPage> {
 
 class User {
   int id;
-  int idSup;
+  String? idSup;
   String nom;
   String prenom;
   int tel;
-  bool isComptable;
+  int isComptable;
   String clee;
   int idAgence;
 
@@ -171,16 +171,13 @@ class User {
       this.clee, this.idAgence);
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json["Id"],
+      : id = int.parse(json["Id"]) ,
         idSup = json["IdSup"],
-        nom = json["Nom"],
-        prenom = json["Prenom"],
-        tel = json["Tel"],
-        isComptable = json["IsComptable"],
-        clee = json["Clee"],
-        idAgence = json["IdAgence"];
+        nom = json["Nom"] as String,
+        prenom = json["Prenom"] as String,
+        tel = int.parse(json["Tel"]),
+        isComptable = int.parse(json["IsComptable"]),
+        clee = json["Clee"] as String,
+        idAgence = int.parse(json["IdAgence"]);
 
-  Map<String, dynamic> toJson() {
-    return {'Id': id};
-  }
 }
