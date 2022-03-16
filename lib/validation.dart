@@ -63,12 +63,7 @@ class ValidationState extends State<Validation> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                            Text(
-                            'Commune D ',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                          Icon(Icons.arrow_right_alt, size: 40, ),
+
                            Text(
                             ' Commune A',
                             style:   TextStyle(
