@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:epoka/accueil.dart';
 import 'package:epoka/payment.dart';
 import 'package:epoka/validation.dart';
@@ -50,10 +48,9 @@ class RoutePageState extends State<RoutePage> {
             backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.check),
-            label: 'validation des missions',
-            backgroundColor: Colors.green,
-          ),
+              icon: Icon(Icons.check),
+              label: 'Validation',
+              backgroundColor: Colors.blue),
           BottomNavigationBarItem(
             icon: Icon(Icons.payments),
             label: 'paiment des frais',
