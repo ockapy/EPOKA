@@ -19,9 +19,9 @@ class PaymentState extends State<Payment> {
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               colors: [
-                Colors.purpleAccent,
-                Colors.amber,
-                Colors.blue,
+                Color.fromARGB(255, 255, 123, 0),
+                Color.fromARGB(255, 253, 158, 68),
+                Color.fromARGB(255, 255, 123, 0),
               ],
             ),
           ),
@@ -45,7 +45,7 @@ class PaymentState extends State<Payment> {
                                 
                           ),
                           const SizedBox(width: 20,),
-                          FloatingActionButton.small(onPressed: (() {
+                          FloatingActionButton.small(backgroundColor: Colors.orange,onPressed: (() {
                            setState(() {
                              Description = !Description;
                            }); 
@@ -105,21 +105,47 @@ class PaymentState extends State<Payment> {
                             ' Km ',
                             style:   TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 40),
+                                
                           ),
+                          
                         ],
                       ),
-
+                      const SizedBox(height: 15),
                       Row(
                          mainAxisAlignment: MainAxisAlignment.center,
                         children:  [
-                          FloatingActionButton.small(onPressed: (() {
-                           setState(() {
-                             Description = !Description;
-                           }); 
-                        
-                      }), child: const Icon(Icons.add, size: 40,)),
-                        ],
-                      ),
+                          InkWell(
+                            onTap: () {
+                              print("remboursement");
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 250,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50)),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        Color(0xFF8A2387),
+                                        Color(0xFFE94057),
+                                        Color(0xFFF27121),
+                                      ])),
+                              child: const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: Text(
+                                  'Rembourser',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]
+                        ),
 
                       if( Description == true) ...[
                        Container(
@@ -127,7 +153,7 @@ class PaymentState extends State<Payment> {
                                 child: const Text(
                                   'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
                                   style: TextStyle(
-                                      color: Colors.red,
+                                      color: Color.fromARGB(255, 0, 0, 0),
                                       fontWeight: FontWeight.bold),
                                 )),
                               ],

@@ -13,7 +13,7 @@
      WHERE Mission.IdUtilisateur = utilisateur.Id
      AND mission.IdCommune = commune.Id
      AND mission.IdEtatMission = etatmission.Id
-     AND etatmission.Nom = 'Validation'";
+     AND etatmission.Nom = 'Remboursement'";
     $resultats = $pdo->prepare($requete);
     $resultats->bindValue(':identifier',$_GET['identifier']);
     $resultats->bindValue(':mdp',$_GET['mdp']);
