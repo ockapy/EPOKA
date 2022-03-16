@@ -1,4 +1,5 @@
 import 'package:epoka/login.dart';
+import 'package:epoka/payment.dart';
 import 'package:epoka/routeur.dart';
 import 'package:epoka/validation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => Validation(),
+        '/': (context) => Payment(),
         '/Home': (context) => RoutePage(),
       },
       title: 'Flutter Demo',
