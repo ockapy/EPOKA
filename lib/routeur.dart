@@ -1,4 +1,5 @@
 import 'package:epoka/accueil.dart';
+import 'package:epoka/main.dart';
 import 'package:epoka/payment.dart';
 import 'package:epoka/validation.dart';
 import 'package:flutter/material.dart';
@@ -29,43 +30,54 @@ class RoutePageState extends State<RoutePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Icon(Icons.account_circle, color: Colors.black, size: 50),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 8.0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+    return StreamBuilder(
+      stream: dbStream,
+      builder: (BuildContext context, snapshot) { 
+        if (snapshot.hasData == false) {
+          return Text("vous n'êtes pas connecté");
+        } 
+        else{
+        return Scaffold(
+          appBar: AppBar(
+            title:
+                const Icon(Icons.account_circle, color: Colors.black, size: 50),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.check),
-              label: 'Validation',
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
-            label: 'paiment des frais',
-            backgroundColor: Colors.purple,
+          extendBodyBehindAppBar: true,
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'paramétrages',
-            backgroundColor: Color.fromARGB(197, 255, 0, 136),
+          bottomNavigationBar: BottomNavigationBar(
+            elevation: 8.0,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.red,
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.check),
+                  label: 'Validation',
+                  backgroundColor: Colors.blue),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.payments),
+                label: 'paiment des frais',
+                backgroundColor: Colors.purple,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'paramétrages',
+                backgroundColor: Color.fromARGB(197, 255, 0, 136),
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Color(0xFFFF8F00),
+            onTap: _onItemTapped,
           ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFFF8F00),
-        onTap: _onItemTapped,
-      ),
+        );
+        }
+      },
     );
   }
 }

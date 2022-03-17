@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:epoka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -145,9 +146,8 @@ class MasterPageState extends State<MasterPage> {
       final response = await http.get(url);
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
        var utilisateur = User.fromJson(map);
-
-      print(utilisateur.clee);
-      Navigator.of(context).popAndPushNamed('/Home', arguments: utilisateur);
+      controller.add(utilisateur);
+      Navigator.of(context).popAndPushNamed('/Home');
     } catch (e) {
       setState(() {
         error = true;

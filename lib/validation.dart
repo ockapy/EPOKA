@@ -11,13 +11,6 @@ class ValidationState extends State<Validation> {
   var mission = [];
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
-    print(args);
-    return StreamBuilder(
-        stream: dataBaseStream,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          // GetData();
-
           return Scaffold(
             body: SingleChildScrollView(
               child: Container(
@@ -155,7 +148,7 @@ class ValidationState extends State<Validation> {
               ),
             ),
           );
-        });
+        
   }
 
   // Future<dynamic> GetData() async {
