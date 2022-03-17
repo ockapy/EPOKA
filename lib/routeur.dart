@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:epoka/accueil.dart';
 import 'package:epoka/main.dart';
 import 'package:epoka/payment.dart';
@@ -34,7 +36,10 @@ class RoutePageState extends State<RoutePage> {
       stream: dbStream,
       builder: (BuildContext context, snapshot) { 
         if (snapshot.hasData == false) {
-          return Text("vous n'êtes pas connecté");
+            return Material(
+              child: TextButton(onPressed: () {Navigator.of(context).popAndPushNamed('/');}, child: Text("Accès Non autorisé")),
+            );
+            
         } 
         else{
         return Scaffold(
@@ -54,7 +59,7 @@ class RoutePageState extends State<RoutePage> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.red, 
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.check),
