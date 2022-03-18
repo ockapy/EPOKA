@@ -9,7 +9,7 @@ void main() {
   runApp(const MyApp());
 }
 
- final controller = BehaviorSubject();
+final controller = BehaviorSubject();
 final dbStream = controller.stream;
 
 

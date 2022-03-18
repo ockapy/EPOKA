@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:epoka/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class Validation extends StatefulWidget {
+  late List<dynamic> data = [];
+
   @override
   State<Validation> createState() => ValidationState();
 }
@@ -12,9 +15,22 @@ class Validation extends StatefulWidget {
 class ValidationState extends State<Validation> {
   bool description = false;
   var mission = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    GetData().then((result) {
+      
+      setState(() {
+        mission = result;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-          return Scaffold(
+    return  Scaffold(
             body: SingleChildScrollView(
               child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -45,9 +61,9 @@ class ValidationState extends State<Validation> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      'intituler',
-                                      style: TextStyle(
+                                    Text(
+                                      element['Intituler'],
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 40),
                                     ),
@@ -73,10 +89,10 @@ class ValidationState extends State<Validation> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      ' Commune A',
-                                      style: TextStyle(
+                                      element["NomCommune"],
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 40),
                                     ),
@@ -84,9 +100,9 @@ class ValidationState extends State<Validation> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      'Date D ',
+                                      element["DateDebut"],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 40),
@@ -96,7 +112,7 @@ class ValidationState extends State<Validation> {
                                       size: 40,
                                     ),
                                     Text(
-                                      ' Date A',
+                                      element["DateFin"],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 40),
@@ -105,9 +121,9 @@ class ValidationState extends State<Validation> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      'Utilisateur  ',
+                                      element["NomUtilisateur"],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 40),
@@ -151,21 +167,19 @@ class ValidationState extends State<Validation> {
               ),
             ),
           );
-        
+        }
   }
 
   Future<dynamic> GetData() async {
+    List<dynamic> mission = [];
     try {
-      var url = Uri.parse(
-          'http://127.0.0.1/epoka/login.php?identifier=login&mdp=password');
+      var url = Uri.parse('http://127.0.0.1/epoka/validation.php');
       final response = await http.get(url);
       var info = jsonDecode(response.body);
-      print(info["Nom"]);
-      Navigator.of(context).popAndPushNamed('/Home');
+     mission.add(info);
+      print(info);
     } catch (e) {
-      setState(() {
-      });
       print(e);
     }
+    return mission;
   }
-}
