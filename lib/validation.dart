@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:epoka/main.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class Validation extends StatefulWidget {
@@ -7,7 +10,7 @@ class Validation extends StatefulWidget {
 }
 
 class ValidationState extends State<Validation> {
-  bool Description = false;
+  bool description = false;
   var mission = [];
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class ValidationState extends State<Validation> {
                                     FloatingActionButton.small(
                                         onPressed: (() {
                                           setState(() {
-                                            Description = !Description;
+                                            description = !description;
                                           });
                                         }),
                                         child: const Icon(
@@ -123,7 +126,7 @@ class ValidationState extends State<Validation> {
                                     ),
                                   ],
                                 ),
-                                if (Description == true) ...[
+                                if (description == true) ...[
                                   Container(
                                       padding: const EdgeInsets.all(8),
                                       child: const Text(
@@ -151,19 +154,18 @@ class ValidationState extends State<Validation> {
         
   }
 
-  // Future<dynamic> GetData() async {
-  //   try {
-  //     var url = Uri.parse(
-  //         'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
-  //     final response = await http.get(url);
-  //     var info = jsonDecode(response.body);
-  //     print(info["Nom"]);
-  //     Navigator.of(context).popAndPushNamed('/Home');
-  //   } catch (e) {
-  //     setState(() {
-  //       error = true;
-  //     });
-  //     print(e);
-  //   }
-  // }
+  Future<dynamic> GetData() async {
+    try {
+      var url = Uri.parse(
+          'http://127.0.0.1/epoka/login.php?identifier=login&mdp=password');
+      final response = await http.get(url);
+      var info = jsonDecode(response.body);
+      print(info["Nom"]);
+      Navigator.of(context).popAndPushNamed('/Home');
+    } catch (e) {
+      setState(() {
+      });
+      print(e);
+    }
+  }
 }

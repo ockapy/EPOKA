@@ -38,10 +38,8 @@ class RoutePageState extends State<RoutePage> {
         if (snapshot.hasData == false) {
             return Material(
               child: TextButton(onPressed: () {Navigator.of(context).popAndPushNamed('/');}, child: Text("Accès Non autorisé")),
-            );
-            
-        } 
-        else{
+            );   
+        } else {
         return Scaffold(
           appBar: AppBar(
             title:

@@ -147,7 +147,8 @@ class MasterPageState extends State<MasterPage> {
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
        var utilisateur = User.fromJson(map);
       controller.add(utilisateur);
-      Navigator.of(context).popAndPushNamed('/Home');
+      Navigator.pop(context);
+      Navigator.of(context).pushNamed("/Home");
     } catch (e) {
       setState(() {
         error = true;
