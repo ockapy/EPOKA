@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:epoka/accueil.dart';
 import 'package:epoka/main.dart';
 import 'package:epoka/payment.dart';
@@ -13,7 +11,7 @@ class RoutePage extends StatefulWidget {
   State<RoutePage> createState() => RoutePageState();
 }
 
-class RoutePageState extends State<RoutePage> {
+class RoutePageState extends State<RoutePage>{
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -23,8 +21,8 @@ class RoutePageState extends State<RoutePage> {
     Payment(),
     MasterPage()
   ];
-
   void _onItemTapped(int index) {
+    
     setState(() {
       _selectedIndex = index;
     });

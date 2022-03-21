@@ -16,20 +16,23 @@ class MasterPageState extends State<MasterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                Color.fromARGB(255, 255, 0, 134),
-                Color.fromARGB(255, 33, 59, 255),
-                Color.fromARGB(255, 255, 161, 0),
-              ])),
-          child: Center(
+        body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [
+              Color.fromARGB(255, 255, 0, 134),
+              Color.fromARGB(255, 33, 59, 255),
+              Color.fromARGB(255, 255, 161, 0),
+            ])),
+        child: Center(
+          child: FittedBox(
+            alignment: Alignment.center,
+            fit: BoxFit.scaleDown,
             child: Container(
               width: 325,
               height: 470,
@@ -136,7 +139,7 @@ class MasterPageState extends State<MasterPage> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Future<dynamic> login(String login, String password) async {
@@ -145,7 +148,7 @@ class MasterPageState extends State<MasterPage> {
           'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
       final response = await http.get(url);
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
-       var utilisateur = User.fromJson(map);
+      var utilisateur = User.fromJson(map);
       controller.add(utilisateur);
       Navigator.pop(context);
       Navigator.of(context).pushNamed("/Home");
@@ -172,7 +175,7 @@ class User {
       this.clee, this.idAgence);
 
   User.fromJson(Map<String, dynamic> json)
-      : id = int.parse(json["Id"]) ,
+      : id = int.parse(json["Id"]),
         idSup = json["IdSup"],
         nom = json["Nom"] as String,
         prenom = json["Prenom"] as String,
@@ -180,5 +183,4 @@ class User {
         isComptable = int.parse(json["IsComptable"]),
         clee = json["Clee"] as String,
         idAgence = int.parse(json["IdAgence"]);
-
 }
