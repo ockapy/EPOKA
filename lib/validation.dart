@@ -10,10 +10,10 @@ class Validation extends StatefulWidget {
 final Map<dynamic, bool> index = {};
 
 class ValidationState extends State<Validation> {
-  final Future<List<dynamic>> mission = getData().then((value) => value);
-
   @override
   Widget build(BuildContext context) {
+  final Future<List<dynamic>> mission = getData().then((value) => value);
+
     return FutureBuilder(
         future: mission,
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
@@ -33,119 +33,125 @@ class ValidationState extends State<Validation> {
                       ],
                     ),
                   ),
-                  child: Align(
+                  child: SafeArea(child:  Align(
                     alignment: Alignment.center,
+                    heightFactor: 2.0,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: snapshot.data!.map<Widget>((element) {
                           return Card(
-                            elevation: 22,
-                            child: Column(children: [
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    element['Intituler'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  FloatingActionButton.small(
-                                      onPressed: (() {
-                                        index[element] = !index[element]!;
-                                        setState(() {});
-                                      }),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 40,
-                                      )),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                width: MediaQuery.of(context).size.width - 200,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    element["NomCommune"],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    element["DateDebut"],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_right_alt,
-                                    size: 40,
-                                  ),
-                                  Text(
-                                    element["DateFin"],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    element["NomUtilisateur"],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                  const Text(
-                                    ' Km :',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                  const Text(
-                                    ' Km ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 30),
-                              Visibility(
-                                  visible: index[element]!,
-                                  child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      child:  Text(
-                                        element["Description"],
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold),
-                                      ))),
-                              Container(
-                                width: MediaQuery.of(context).size.width - 200,
-                              ),
-                            ]),
+                              elevation: 22,
+                              child: Column(children: [
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element['Intituler'],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    FloatingActionButton.small(
+                                        onPressed: (() {
+                                          index[element] = !index[element]!;
+                                          setState(() {});
+                                        }),
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 40,
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["NomCommune"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["DateDebut"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Icon(
+                                      Icons.arrow_right_alt,
+                                      size: 40,
+                                    ),
+                                    Text(
+                                      element["DateFin"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["NomUtilisateur"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Text(
+                                      ' Km :',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Text(
+                                      ' Km ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 30),
+                                Visibility(
+                                    visible: index[element]!,
+                                    child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          element["Description"],
+                                          style: const TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
+                                        ))),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                ),
+                              ]),
+                            
                           );
                         }).toList(),
                       ),
                     ),
                   )),
-            );
+            ));
           } else {
             return const SizedBox(
               child: CircularProgressIndicator(),
@@ -168,8 +174,6 @@ Future<dynamic> getData() async {
       mission.add(value);
       index.addAll({value: false});
     });
-    
-
     return mission;
   } catch (e) {
     print(e);

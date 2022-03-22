@@ -39,13 +39,6 @@ class RoutePageState extends State<RoutePage>{
             );   
         } else {
         return Scaffold(
-          appBar: AppBar(
-            title:
-                const Icon(Icons.account_circle, color: Colors.black, size: 50),
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
-          extendBodyBehindAppBar: true,
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
