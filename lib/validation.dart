@@ -10,9 +10,11 @@ class Validation extends StatefulWidget {
 final Map<dynamic, bool> index = {};
 
 class ValidationState extends State<Validation> {
+  final Future<List<dynamic>> mission = getData().then((value) => value);
+
   @override
   Widget build(BuildContext context) {
-  final Future<List<dynamic>> mission = getData().then((value) => value);
+
 
     return FutureBuilder(
         future: mission,
@@ -138,7 +140,8 @@ class ValidationState extends State<Validation> {
                                           element["Description"],
                                           style: const TextStyle(
                                               color: Colors.red,
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 35),
                                         ))),
                                 Container(
                                   width:
@@ -171,6 +174,7 @@ Future<dynamic> getData() async {
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {
+      print(value["Description"]);
       mission.add(value);
       index.addAll({value: false});
     });
