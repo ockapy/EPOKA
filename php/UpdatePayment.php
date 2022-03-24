@@ -1,7 +1,5 @@
 <?php 
-
-    header("Access-Control-Allow-Origin: *")
-
+    header("Access-Control-Allow-Origin: *");
     $host = '127.0.0.1';
     $db   = 'epoka';
     $user = 'root';
@@ -9,10 +7,9 @@
     $charset = 'utf8mb4';
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $pdo = new PDO($dsn, $user, $pass);
-    $requete = "SELECT * FROM utilisateur WHERE Clee=:identifier AND Mdp=:mdp";
+    $requete = "UPDATE mission SET EtatMission = 'Archivé' WHERE mission.id=:ID";
     $resultats = $pdo->prepare($requete);
-    $resultats->bindValue(':identifier',$_GET['identifier']);
-    $resultats->bindValue(':mdp',$_GET['mdp']);
+    $resultats->bindValue(':ID',$_GET['ID']);
     $resultats->execute();
     $userData = $resultats->fetch(PDO::FETCH_ASSOC);
     echo json_encode($userData)

@@ -1,5 +1,5 @@
 <?php 
- header("Access-Control-Allow-Origin: *")
+    header("Access-Control-Allow-Origin: *");
     $host = '127.0.0.1';
     $db   = 'epoka';
     $user = 'root';
@@ -8,13 +8,14 @@
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $pdo = new PDO($dsn, $user, $pass);
     $requete = 
-    "SELECT utilisateur.Nom as NomUtilisateur , commune.Nom as NomCommune , agence.Nom as NomAgence, mission.DateDebut , mission.DateFin , mission.Intituler , mission.Description
+    "SELECT mission.Id, utilisateur.Nom as NomUtilisateur , commune.Nom as NomCommune , agence.Nom as NomAgence, mission.DateDebut , mission.DateFin , mission.Intituler , mission.Description
      FROM utilisateur , mission , agence , commune
      WHERE Mission.IdUtilisateur = utilisateur.Id
      AND mission.IdCommune = commune.Id
-     AND mission.EtatMission = 'Validation'";
+     AND utilisateur.IdAgence = agence.Id
+     AND mission.EtatMission = 'Payment'";
     $resultats = $pdo->prepare($requete);
     $resultats->execute();
-    $userData = $resultats->fetch(PDO::FETCH_ASSOC);
+    $userData = $resultats->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($userData)
 ?>
