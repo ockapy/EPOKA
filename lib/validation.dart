@@ -1,134 +1,185 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class Validation extends StatefulWidget {
   @override
-
   State<Validation> createState() => ValidationState();
 }
 
+final Map<dynamic, bool> index = {};
+
 class ValidationState extends State<Validation> {
-  bool Description = false;
+  final Future<List<dynamic>> mission = getData().then((value) => value);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.purpleAccent,
-                Colors.amber,
-                Colors.blue,
-              ],
-            ),
-          ),
-          child: Align(
-              alignment: Alignment.center,
+
+
+    return FutureBuilder(
+        future: mission,
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height - 200,
-                width: MediaQuery.of(context).size.width - 100,
-                child: Column(children: [
-                Card(
-                    elevation: 22,
-                    child: Column(children: [
-                      const SizedBox(height: 10),
-                      Row(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
-                           const Text(
-                            'intituler',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                                
-                          ),
-                          const SizedBox(width: 20,),
-                          FloatingActionButton.small(onPressed: (() {
-                           setState(() {
-                             Description = !Description;
-                           }); 
-                        
-                      }), child: const Icon(Icons.add, size: 40,)),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        
-                      ),
-                      
-                      Row(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.purpleAccent,
+                        Colors.amber,
+                        Colors.blue,
+                      ],
+                    ),
+                  ),
+                  child: SafeArea(child:  Align(
+                    alignment: Alignment.center,
+                    heightFactor: 2.0,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        mainAxisSize: MainAxisSize.min,
+                        children: snapshot.data!.map<Widget>((element) {
+                          return Card(
+                              elevation: 22,
+                              child: Column(children: [
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element['Intituler'],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    FloatingActionButton.small(
+                                        onPressed: (() {
+                                          index[element] = !index[element]!;
+                                          setState(() {});
+                                        }),
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 40,
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["NomCommune"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["DateDebut"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Icon(
+                                      Icons.arrow_right_alt,
+                                      size: 40,
+                                    ),
+                                    Text(
+                                      element["DateFin"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      element["NomUtilisateur"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Text(
+                                      ' Km :',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    const Text(
+                                      ' Km ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 30),
+                                Visibility(
+                                    visible: index[element]!,
+                                    child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          element["Description"],
+                                          style: const TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 35),
+                                        ))),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                ),
+                              ]),
+                            
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )),
+            ));
+          } else {
+            return const SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            );
+          }
+        });
+  }
+}
 
-                           Text(
-                            ' Commune A',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                            Text(
-                            'Date D ',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                          Icon(Icons.arrow_right_alt, size: 40, ),
-                           Text(
-                            ' Date A',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                            Text(
-                            'Utilisateur  ',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
+Future<dynamic> getData() async {
+  List<dynamic> mission = [];
 
-                           Text(
-                            ' Km :',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-
-                          Text(
-                            ' Km ',
-                            style:   TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                        ],
-                      ),
-                      if( Description == true) ...[
-                       Container(
-                                padding: const EdgeInsets.all(8),
-                                child: const Text(
-                                  'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                              ],
-                      const SizedBox(height: 30),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        
-                      ),
-                    ])),
-                  ],)
-              )),
-        ),
-      ),
-    );
+  try {
+    var url = Uri.parse('http://127.0.0.1/epoka/validation.php');
+    final response = await http.get(url);
+    var info = jsonDecode(response.body);
+    info.forEach((value) {
+      print(value["Description"]);
+      mission.add(value);
+      index.addAll({value: false});
+    });
+    return mission;
+  } catch (e) {
+    print(e);
   }
 }

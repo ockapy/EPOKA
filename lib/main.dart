@@ -1,12 +1,18 @@
+import 'dart:async';
 import 'package:epoka/login.dart';
 import 'package:epoka/payment.dart';
 import 'package:epoka/routeur.dart';
 import 'package:epoka/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+final controller = BehaviorSubject();
+final dbStream = controller.stream;
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => Payment(),
+        '/': (context) => MasterPage(),
         '/Home': (context) => RoutePage(),
       },
       title: 'Flutter Demo',

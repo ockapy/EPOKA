@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:epoka/routeur.dart';
+import 'package:epoka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,20 +16,23 @@ class MasterPageState extends State<MasterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                Color.fromARGB(255, 255, 0, 134),
-                Color.fromARGB(255, 33, 59, 255),
-                Color.fromARGB(255, 255, 161, 0),
-              ])),
-          child: Center(
+        body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [
+              Color.fromARGB(255, 255, 0, 134),
+              Color.fromARGB(255, 33, 59, 255),
+              Color.fromARGB(255, 255, 161, 0),
+            ])),
+        child: Center(
+          child: FittedBox(
+            alignment: Alignment.center,
+            fit: BoxFit.scaleDown,
             child: Container(
               width: 325,
               height: 470,
@@ -136,7 +139,7 @@ class MasterPageState extends State<MasterPage> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Future<dynamic> login(String login, String password) async {
@@ -144,9 +147,11 @@ class MasterPageState extends State<MasterPage> {
       var url = Uri.parse(
           'http://127.0.0.1/epoka/login.php?identifier=$login&mdp=$password');
       final response = await http.get(url);
-      var info = jsonDecode(response.body);
-      print(info["Nom"]);
-      Navigator.of(context).popAndPushNamed('/Home');
+      Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
+      var utilisateur = User.fromJson(map);
+      controller.add(utilisateur);
+      Navigator.pop(context);
+      Navigator.of(context).pushNamed("/Home");
     } catch (e) {
       setState(() {
         error = true;
@@ -154,4 +159,28 @@ class MasterPageState extends State<MasterPage> {
       print(e);
     }
   }
+}
+
+class User {
+  int id;
+  String? idSup;
+  String nom;
+  String prenom;
+  int tel;
+  int isComptable;
+  String clee;
+  int idAgence;
+
+  User(this.id, this.idSup, this.nom, this.prenom, this.tel, this.isComptable,
+      this.clee, this.idAgence);
+
+  User.fromJson(Map<String, dynamic> json)
+      : id = int.parse(json["Id"]),
+        idSup = json["IdSup"],
+        nom = json["Nom"] as String,
+        prenom = json["Prenom"] as String,
+        tel = int.parse(json["Tel"]),
+        isComptable = int.parse(json["IsComptable"]),
+        clee = json["Clee"] as String,
+        idAgence = int.parse(json["IdAgence"]);
 }

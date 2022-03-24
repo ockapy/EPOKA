@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 16 mars 2022 à 08:48
+-- Généré le :  ven. 18 mars 2022 à 09:25
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -36832,27 +36832,6 @@ INSERT INTO `entreprise` (`Id`, `IdForfait`, `RaisonSocial`, `Siret`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `etatmission`
---
-
-DROP TABLE IF EXISTS `etatmission`;
-CREATE TABLE IF NOT EXISTS `etatmission` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` varchar(30) NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `etatmission`
---
-
-INSERT INTO `etatmission` (`Id`, `Nom`) VALUES
-(1, 'Validation'),
-(2, 'Remboursement');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `forfait`
 --
 
@@ -36883,24 +36862,15 @@ CREATE TABLE IF NOT EXISTS `mission` (
   `IdUtilisateur` int(11) NOT NULL,
   `IdCommune` int(11) NOT NULL,
   `Adresse` varchar(30) NOT NULL,
-  `IdEtatMission` int(11) NOT NULL,
   `DateDebut` date NOT NULL,
   `DateFin` date NOT NULL,
   `Intituler` varchar(30) NOT NULL,
   `Description` text NOT NULL,
+  `EtatMission` varchar(30) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IdCommune` (`IdCommune`),
-  KEY `IdEtatMission` (`IdEtatMission`),
   KEY `mission_ibfk_4` (`IdUtilisateur`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `mission`
---
-
-INSERT INTO `mission` (`Id`, `IdUtilisateur`, `IdCommune`, `Adresse`, `IdEtatMission`, `DateDebut`, `DateFin`, `Intituler`, `Description`) VALUES
-(1, 1, 13446, '4rue monku', 1, '2022-03-29', '2022-03-31', 'Test', 'CECI EST UN VOYAGE DE TEST JE TEST DES TRUC POUR LE FUN OU POUR TESTER DES TRUC SI LES TRUC MARCHE OU MARCHE PAS JE LES TEST J APPELLE CA UN TEST '),
-(2, 1, 14505, '27 rue Moussa', 2, '2022-03-30', '2022-04-02', 'REtest', 'bonsoir je suis un test qui test des test pour des test avec des test');
 
 -- --------------------------------------------------------
 
@@ -36953,7 +36923,6 @@ ALTER TABLE `entreprise`
 --
 ALTER TABLE `mission`
   ADD CONSTRAINT `mission_ibfk_1` FOREIGN KEY (`IdCommune`) REFERENCES `commune` (`Id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `mission_ibfk_2` FOREIGN KEY (`IdEtatMission`) REFERENCES `etatmission` (`Id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `mission_ibfk_4` FOREIGN KEY (`IdUtilisateur`) REFERENCES `utilisateur` (`Id`) ON UPDATE CASCADE;
 
 --
