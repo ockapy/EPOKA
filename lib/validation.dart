@@ -167,7 +167,6 @@ Future<dynamic> getData() async {
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {
-      print(value["Description"]);
       mission.add(value);
       index.addAll({value: false});
     });

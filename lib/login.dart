@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:epoka/main.dart';
+import 'package:epoka/routeur.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterPage extends StatefulWidget {
   @override
@@ -12,9 +14,17 @@ class MasterPageState extends State<MasterPage> {
   final username = TextEditingController();
   final password = TextEditingController();
   bool error = false;
+  
+
+
+  setLocalData() async {
+    SharedPreferences local = await SharedPreferences.getInstance();
+    return local.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
+    setLocalData();
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -149,9 +159,12 @@ class MasterPageState extends State<MasterPage> {
       final response = await http.get(url);
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
       var utilisateur = User.fromJson(map);
+      
+      SharedPreferences local = await SharedPreferences.getInstance();
+      local.setBool('isConnected', true);
       controller.add(utilisateur);
       Navigator.pop(context);
-      Navigator.of(context).pushNamed("/Home");
+      Navigator.of(context).pushNamed('/Home');
     } catch (e) {
       setState(() {
         error = true;
