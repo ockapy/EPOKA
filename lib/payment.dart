@@ -35,7 +35,10 @@ class PaymentState extends State<Payment> {
               ),
               child: Align(
                 alignment: Alignment.center,
-                child: SingleChildScrollView(
+                 child:  FractionallySizedBox(
+              heightFactor: 0.8,
+              widthFactor:0.8,
+              child: SingleChildScrollView(
                   child: Column(
                     children: snapshot.data!
                         .map<Widget>(
@@ -174,6 +177,7 @@ class PaymentState extends State<Payment> {
                         .toList(),
                   ),
                 ),
+              ),
               ),
             );
           } else {
