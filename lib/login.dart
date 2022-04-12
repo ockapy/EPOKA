@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:epoka/main.dart';
-import 'package:epoka/routeur.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 class MasterPage extends StatefulWidget {
+  final SharedPreferences storage;
+  MasterPage(this.storage);
+
   @override
   State<MasterPage> createState() => MasterPageState();
 }
@@ -16,15 +16,8 @@ class MasterPageState extends State<MasterPage> {
   bool error = false;
   
 
-
-  setLocalData() async {
-    SharedPreferences local = await SharedPreferences.getInstance();
-    return local.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
-    setLocalData();
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -159,12 +152,11 @@ class MasterPageState extends State<MasterPage> {
       final response = await http.get(url);
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
       var utilisateur = User.fromJson(map);
-      
-      SharedPreferences local = await SharedPreferences.getInstance();
-      local.setBool('isConnected', true);
-      controller.add(utilisateur);
+
+     await widget.storage.setStringList('user', utilisateur.toList());
       Navigator.pop(context);
       Navigator.of(context).pushNamed('/Home');
+    
     } catch (e) {
       setState(() {
         error = true;
@@ -175,14 +167,14 @@ class MasterPageState extends State<MasterPage> {
 }
 
 class User {
-  int id;
+  int? id;
   String? idSup;
-  String nom;
-  String prenom;
-  int tel;
-  int isComptable;
-  String clee;
-  int idAgence;
+  String? nom;
+  String? prenom;
+  int? tel;
+  int? isComptable;
+  String? clee;
+  int? idAgence;
 
   User(this.id, this.idSup, this.nom, this.prenom, this.tel, this.isComptable,
       this.clee, this.idAgence);
@@ -196,4 +188,18 @@ class User {
         isComptable = int.parse(json["IsComptable"]),
         clee = json["Clee"] as String,
         idAgence = int.parse(json["IdAgence"]);
+  
+  List<String> toList(){
+    User user = User(id, idSup, nom, prenom, tel, isComptable, clee, idAgence);
+    List<String> utilisateur = [];
+    utilisateur.addAll([user.clee!, user.nom!, user.prenom!, user.tel.toString(), user.idAgence.toString()]);
+    return utilisateur;
+  }
+
+  User.fromList(List<String> user)
+    : clee = (user[0]),
+        nom = user[1],
+        prenom = user[2],
+        tel = int.parse(user[3]),
+        idAgence = int.parse(user[4]);
 }

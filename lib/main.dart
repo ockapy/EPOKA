@@ -1,31 +1,30 @@
-import 'dart:async';
-import 'package:epoka/login.dart';
-import 'package:epoka/payment.dart';
-import 'package:epoka/routeur.dart';
-import 'package:epoka/validation.dart';
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
+import 'dart:html';
 
-void main() {
-  runApp(const MyApp());
+import 'package:epoka/login.dart';
+import 'package:epoka/routeur.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() async {
+  final storage = await SharedPreferences.getInstance();
+  runApp(MyApp(
+    storage: storage,
+  ));
 }
 
-final controller = BehaviorSubject();
-final dbStream = controller.stream;
-
-
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-  static const String route = '/overview';
-
-  // This widget is the root of your application.
+  final SharedPreferences storage;
+  const MyApp({Key? key, required this.storage})
+      : super(key: key);
+      
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MasterPage(),
-        '/Home': (context) => RoutePage(),
+        '/': (context) => MasterPage(storage),
+        '/Home': (context) => RoutePage(storage),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
