@@ -6,6 +6,8 @@ import 'package:epoka/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'UpdateParam.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MasterPage(),
+        '/': (context) => UpdateParam(),
         '/Home': (context) => RoutePage(),
       },
       title: 'Flutter Demo',
