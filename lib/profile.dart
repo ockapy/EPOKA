@@ -18,9 +18,9 @@ class ProfilePageState extends State<ProfilePage> {
     return FutureBuilder(
         future: getLocalData(widget.storage),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-          if(snapshot.connectionState == ConnectionState.done){
-          return SingleChildScrollView(
-            child: Container(
+          if (snapshot.connectionState == ConnectionState.done) {
+            final user = snapshot.data;
+            return Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
@@ -35,25 +35,40 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height - 200,
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: Card(
-                        elevation: 22,
-                        child: Column(children: [
-                          Text(
-                            snapshot.data!.nom!,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ),
-                          const SizedBox(height: 30),
-                        ])),
-                  )),
-            ),
-          );
-          }
-          else{
+                alignment: Alignment.center,
+                child: Container(
+                  height: MediaQuery.of(context).size.height - 200,
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: Card(
+                    elevation: 22,
+                    child: Column(
+                      children: [
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.account_circle, size: 60),
+                                Text(user!.nom!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
+                                const Text(" ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
+                               Text(user.prenom!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),)
+
+                              ],
+                            )),
+                            Align(alignment: Alignment.center,child:
+                            Column(children: [
+                              SizedBox(width: 60,),
+                              Text("Nom d'utilisateur : " + user.clee!,  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40))
+                            ],)),
+                       
+                        
+                        const SizedBox(height: 30),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          } else {
             return CircularProgressIndicator();
           }
         });
@@ -61,13 +76,13 @@ class ProfilePageState extends State<ProfilePage> {
 }
 
 Future<User> getLocalData(SharedPreferences storage) async {
-  try{
-  print(storage.getStringList('user'));
-  User user = User.fromList(storage.getStringList('user')!);
-  print(user);
+  try {
+    print(storage.getStringList('user'));
+    User user = User.fromList(storage.getStringList('user')!);
+    print(user);
 
-  return user;
-  }catch(e){
+    return user;
+  } catch (e) {
     throw Exception("perdu connard !!");
   }
 }
