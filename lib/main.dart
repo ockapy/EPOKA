@@ -7,7 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  final storage = await SharedPreferences.getInstance();
+  WidgetsFlutterBinding.ensureInitialized();
+SharedPreferences storage = await getStorage().then((value) => value);
   runApp(MyApp(
     storage: storage,
   ));
@@ -32,4 +33,9 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<SharedPreferences> getStorage() async {
+  SharedPreferences storage = await SharedPreferences.getInstance();
+  return storage;
 }
