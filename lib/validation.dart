@@ -172,7 +172,7 @@ class ValidationState extends State<Validation> {
                                             end: Alignment.centerRight,
                                             colors: [
                                               Color(0xFF8A2387),
-                                              Color(0xFFE94057),
+                                              Color(0xFFBE4B54),
                                               Color(0xFFF27121),
                                             ])),
                                     child: const Padding(
@@ -215,7 +215,7 @@ Future<dynamic> getData() async {
   List<dynamic> mission = [];
 
   try {
-    var url = Uri.parse('http://192.168.1.145/epoka/validation.php');
+    var url = Uri.parse('http://localhost/epoka/validation.php');
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {

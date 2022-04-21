@@ -25,7 +25,8 @@ class RoutePageState extends State<RoutePage> {
   @override
   void initState() {
     _widgetOptions = [
-      HomePage(),
+     // HomePage(),
+     Validation(),
       Validation(),
       Payment(),
       ProfilePage(widget.storage)

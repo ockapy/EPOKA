@@ -208,7 +208,7 @@ class PaymentState extends State<Payment> {
 
   Future<dynamic> updateState(String Id) async {
     try {
-      var url = Uri.parse('http://192.168.1.145/epoka/UpdatePayment.php?ID=$Id');
+      var url = Uri.parse('http://localhost/epoka/UpdatePayment.php?ID=$Id');
       final response = await http.get(url);
       setState(() {mission = getData().then((value) => value);});
     } catch (e) {
@@ -221,7 +221,7 @@ Future<dynamic> getData() async {
   List<dynamic> mission = [];
 
   try {
-    var url = Uri.parse('http://192.168.1.145/epoka/Payment.php');
+    var url = Uri.parse('http://localhost/epoka/Payment.php');
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {

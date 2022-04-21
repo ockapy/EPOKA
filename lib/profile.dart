@@ -83,6 +83,6 @@ Future<User> getLocalData(SharedPreferences storage) async {
 
     return user;
   } catch (e) {
-    throw Exception("perdu connard !!");
+    throw Exception("perdu !!");
   }
 }
