@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => UpdateParam(),
+        '/': (context) => Payment(),
         '/Home': (context) => RoutePage(),
       },
       title: 'Flutter Demo',
