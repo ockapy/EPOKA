@@ -85,7 +85,7 @@ class ValidationState extends State<Validation> {
                                         MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        " Commune : " + element["NomCommune"],
+                                        " Commune de départ : " + element["NomCommune"],
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
@@ -137,7 +137,7 @@ class ValidationState extends State<Validation> {
                                             fontSize: 40),
                                       ),
                                       const Text(
-                                        ' Km ',
+                                        ' 575 ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 40),
@@ -215,7 +215,7 @@ Future<dynamic> getData() async {
   List<dynamic> mission = [];
 
   try {
-    var url = Uri.parse('http://localhost/epoka/validation.php');
+    var url = Uri.parse('http://192.168.1.185/epoka/validation.php');
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {

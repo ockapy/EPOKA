@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  @override
+  
   @override
   State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
+  final intitule = TextEditingController();
+  final desc = TextEditingController();
+  final address = TextEditingController();
+  final postal = TextEditingController();
+  final debut = TextEditingController();
+  final fin = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,58 +35,169 @@ class HomePageState extends State<HomePage> {
           child: Align(
               alignment: Alignment.center,
               child: Container(
-                height: MediaQuery.of(context).size.height - 200,
-                width: MediaQuery.of(context).size.width - 100,
                 child: Card(
                     elevation: 22,
-                    child: Column(children: [
-                      const Text(
-                        'Mes missions',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 40),
-                      ),
-                      SizedBox(height: 30),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        child: Table(
-                          border: TableBorder.all(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              borderRadius: BorderRadius.circular(10),
-                              width: 2),
-                          children: [
-                            TableRow(children: [
-                              Column(children: const [
-                                Text('Website',
-                                    style: TextStyle(fontSize: 20.0))
-                              ]),
-                              Column(children: const [
-                                Text('Tutorial',
-                                    style: TextStyle(fontSize: 20.0))
-                              ]),
-                              Column(children: const [
-                                Text('Review', style: TextStyle(fontSize: 20.0))
-                              ]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('Flutter')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('MySQL')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                            TableRow(children: [
-                              Column(children: const [Text('Javatpoint')]),
-                              Column(children: const [Text('ReactJS')]),
-                              Column(children: const [Text('5*')]),
-                            ]),
-                          ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Text("Bienvenue sur EPOKA"),
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ])),
+                        InkWell(
+                          onTap: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Ajout de mission'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    TextField(
+                                      controller: intitule,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "intitulé de la mission",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: desc,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "Description",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: address,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "Adresse",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: postal,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "Code Postal",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: debut,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "Date de début",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      controller: fin,
+                                      decoration: const InputDecoration(
+                                          suffix: Icon(
+                                            Icons.border_color,
+                                            color: Colors.blue,
+                                          ),
+                                          labelText: "Date de fin",
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Annuler'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context, 'OK');
+                                    print("ok");
+                                  },
+                                  child: const Text('Ajouter la mission'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 250,
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Color(0xFF8A2387),
+                                      Color(0xFFE94057),
+                                      Color(0xFFF27121),
+                                    ])),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Text(
+                                'Ajouter une mission',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ]),
+                    )),
               )),
         ),
       ),
