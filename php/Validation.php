@@ -14,7 +14,8 @@
      FROM utilisateur , mission , agence , commune
      WHERE Mission.IdUtilisateur = utilisateur.Id
      AND mission.IdCommune = commune.Id
-     AND mission.EtatMission = 'Validation'";
+     AND mission.EtatMission = 'Validation'
+     GROUP BY mission.id";
     $resultats = $pdo->prepare($requete);
     $resultats->execute();
     $userData = $resultats->fetchAll(PDO::FETCH_ASSOC);
