@@ -215,7 +215,7 @@ Future<dynamic> getData() async {
   List<dynamic> mission = [];
 
   try {
-    var url = Uri.parse('http://192.168.1.185/epoka/validation.php');
+    var url = Uri.parse('http://192.168.1.145/epoka/validation.php');
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {

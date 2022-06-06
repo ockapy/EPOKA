@@ -148,7 +148,7 @@ class MasterPageState extends State<MasterPage> {
   Future<dynamic> login(String login, String password) async {
     try {
       var url = Uri.parse(
-          'http://192.168.1.185/epoka/login.php?identifier=$login&mdp=$password');
+          'http://192.168.1.145/epoka/login.php?identifier=$login&mdp=$password');
       final response = await http.get(url);
       Map<String, dynamic> map = Map.castFrom(json.decode(response.body));
       var utilisateur = User.fromJson(map);
