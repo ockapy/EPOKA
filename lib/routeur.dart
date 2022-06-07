@@ -30,10 +30,11 @@ class RoutePageState extends State<RoutePage> {
   void initState() {
     _widgetOptions = [
       Payment(),
+      Validation(),
       SettingPage(),
     ];
     _androidOptions = [
-      HomePage(),
+      HomePage(widget.storage),
       Validation(),
     ];
   }
@@ -73,6 +74,11 @@ class RoutePageState extends State<RoutePage> {
                       icon: Icon(Icons.payments),
                       label: 'paiment des frais',
                       backgroundColor: Colors.purple,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.payments),
+                      label: 'validation',
+                      backgroundColor: Colors.blue,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.settings),
