@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -44,19 +45,54 @@ class ValidationState extends State<Validation> {
                             return Card(
                               elevation: 22,
                               child: Column(children: [
-                                 Align(
-                                  alignment: Alignment.topLeft,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Align(
+                                      alignment: Alignment.topLeft,
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
                                 index[element] = !index[element]!;
                               });
-                                    },
-                                    customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                                    child: const Icon(Icons.info,
-                                    size: 40, color: Colors.blue,)
-                                  )
+                                        },
+                                        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                        child: const Icon(Icons.info,
+                                        size: 40, color: Colors.blue,)
+                                      )
                                 ),
+                                 IconButton( color: Colors.red, iconSize: 30, icon: const Icon (Icons.delete, color: Colors.red),
+                                 onPressed: () => showDialog(context: context,
+                                 builder: (BuildContext suppr) => AlertDialog(
+                                   title: const Text("êtes-vous sûr de vous ?"),
+                                   content: Column(
+                                     children: [
+                                       const Text("En cliquant sur valider vous supprimerez la mission suivante:"),
+                                       const SizedBox(height: 10,),
+                                       Text(element["Intituler"]),
+                                       Text(element["Description"]),
+                                       Text('ID : ' +element["Id"])
+                                     ],
+                                   ),
+                                   actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(suppr, 'Cancel'),
+                                    child: const Text('Annuler'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(suppr, 'valider');
+                                      deleteMission(element["Id"]);
+                                    }, child: const Text('valider') ,
+                                  ),
+                                ],
+                                 )
+                                 ),),
+                                   ],
+                                 ),
+                                
+                               
                                 const SizedBox(height: 10),
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
@@ -158,9 +194,12 @@ class ValidationState extends State<Validation> {
                                               fontSize: 25),
                                         ))),
                                 InkWell(
-                                  onTap: () {
-                                    print('hey');
-                                  },
+                                  onTap: () => showDialog(context: context, builder: (BuildContext context) {
+                                    
+                                    return Container();
+                                  }),
+                                    
+                                  
                                   child: Container(
                                     alignment: Alignment.center,
                                     width: 250,
@@ -215,7 +254,7 @@ Future<dynamic> getData() async {
   List<dynamic> mission = [];
 
   try {
-    var url = Uri.parse('http://192.168.1.145/epoka/validation.php');
+    var url = Uri.parse('http://10.38.171.147/epoka/validation.php');
     final response = await http.get(url);
     var info = jsonDecode(response.body);
     info.forEach((value) {
@@ -226,4 +265,16 @@ Future<dynamic> getData() async {
   } catch (e) {
     print(e);
   }
+}
+
+deleteMission(id) async {
+
+  try{
+    var url = Uri.parse('http://10.38.171.147/epoka/DeleteMission.php?ID=$id');
+    final response = await http.get(url);
+  }
+  catch(error)
+  {}
+
+
 }
